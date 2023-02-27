@@ -21,12 +21,12 @@ const getIssue = async (id) => {
     return result;
 };
 
-const jiraClient = async (numberIssue) => {
+const jiraClient = async (id) => {
   try {
     const result = await instance.get("/rest/auth/1/session");
     if (result) {
       console.log("Sessão ativa");
-      const issue = await getIssue(numberIssue);
+      const issue = await getIssue(id);
       return issue;
     }
   } catch (error) {
@@ -34,7 +34,7 @@ const jiraClient = async (numberIssue) => {
       console.log("Não autorizado");
       const loginResult = await loginJira();
       if (loginResult) {
-        return jiraClient(numberIssue);
+        return jiraClient(id);
       } else {
         throw error;
       }
